@@ -1,4 +1,10 @@
 function mainFunction() {
+  PropertiesService.getScriptProperties().setProperties({
+    habiticaToken: "exampleToken123456",  //replace with your habitica Token
+    habiticaId: "exampleHabiticaId123456",  //replace with your habitica ID
+    taskListName: 'HabiticaTasksList', // replace with name of your tasks list
+  });
+
   const allHabiticaTasks = getAllTasks();
   const rawGoogleTasks = listGoogleTasks();
   for (habiticaTask of allHabiticaTasks) {

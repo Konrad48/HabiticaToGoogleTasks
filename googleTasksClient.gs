@@ -1,9 +1,15 @@
-const CALENDAR_ID = 'example@gmail.com';    // Your Id of calendar, most probably your gmail username
-const TASK_LIST_ID = 'tasklistId';  //Your task list Id
+const calendarId = PropertiesService.getScriptProperties().getProperty('calendarId');
+const taskListId = getTaskListId()
+
+function getTaskListId() {
+  const taskListName = PropertiesService.getScriptProperties().getProperty('taskListName');
+  const taskLists = Tasks.Tasklists.list();
+  return taskLists.items.find(el => el.title === taskListName).id;
+}
 
 function listGoogleTasks() {
   try {
-    const tasks = Tasks.Tasks.list(TASK_LIST_ID, { showHidden: true });
+    const tasks = Tasks.Tasks.list(taskListId, { showHidden: true });
     if (!tasks.items) {
       console.log('No tasks found.');
       return;
@@ -21,7 +27,7 @@ function updateGoogleTask(updateOptions) {
     status: updateOptions.completed ? 'completed' : 'needsAction',
   };
   try {
-    task = Tasks.Tasks.patch(task,TASK_LIST_ID, updateOptions.id)
+    task = Tasks.Tasks.patch(task,taskListId, updateOptions.id)
     console.log('Task with ID "%s" was updated.', updateOptions.id);
   } catch (err) {
     console.log('Failed with an error %s', err.message);
@@ -35,7 +41,7 @@ function createGoogleTask(title, notes, date) {
     date,
   };
   try {
-    task = Tasks.Tasks.insert(task, TASK_LIST_ID);
+    task = Tasks.Tasks.insert(task, taskListId);
     console.log('Task with ID "%s" was created.', task.id);
   } catch (err) {
     console.log('Failed with an error %s', err.message);

@@ -1,20 +1,20 @@
-const HABITICA_TOKEN = "habiticaToken"; //Your habitica token. Can be acquired here: https://habitica.com/user/settings/api
-const HABITICA_ID = "habiticaId";   //Your habitica user Id. Can be acquired here: https://habitica.com/user/settings/api
 const habTaskURL = "https://habitica.com/api/v3/tasks/";
+const habiticaId = PropertiesService.getScriptProperties().getProperty('habiticaId');
+const habiticaToken = PropertiesService.getScriptProperties().getProperty('habiticaToken');
 
 const templateParams = {
   _post: {
     method: "post",
-    headers: { "x-api-user": HABITICA_ID, "x-api-key": HABITICA_TOKEN },
+    headers: { "x-api-user": habiticaId, "x-api-key": habiticaToken },
   },
   _get: {
     contentType: "application/json",
     method: "get",
-    headers: { "x-api-user": HABITICA_ID, "x-api-key": HABITICA_TOKEN },
+    headers: { "x-api-user": habiticaId, "x-api-key": habiticaToken },
   },
   _delete: {
     method: "delete",
-    headers: { "x-api-user": HABITICA_ID, "x-api-key": HABITICA_TOKEN },
+    headers: { "x-api-user": habiticaId, "x-api-key": habiticaToken },
   },
 };
 
