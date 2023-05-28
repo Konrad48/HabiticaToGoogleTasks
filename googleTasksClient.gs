@@ -48,6 +48,15 @@ function createGoogleTask(title, notes, date) {
   }
 }
 
+function deleteGoogleTask(id) {
+  try {
+    task = Tasks.Tasks.remove(taskListId, id);
+    console.log('Task with ID "%s" was deleted.', id);
+  } catch (err) {
+    console.log('Failed with an error %s', err.message);
+  }
+}
+
 function filerTasksByDate(tasks, date) {
   const searchDateString = date.toISOString().split('T')[0];
   if (!searchDateString) {

@@ -18,9 +18,13 @@ function mainFunction() {
       }
       continue;
     }
+
     if (
       habiticaTask.text === connectedGoogleTask.title &&
-      new Date(habiticaTask.date).getDate() === new Date(connectedGoogleTask.due).getDate() &&
+      (
+        new Date(habiticaTask.date).toDateString() === new Date(connectedGoogleTask.due).toDateString() ||
+        (habiticaTask.date === null && connectedGoogleTask.due === undefined)
+      ) &&
       habiticaTask.completed === (connectedGoogleTask.status === 'completed')
     ) {
       console.log(`Task with ID ${connectedGoogleTask.id} is up to date`)
@@ -32,5 +36,13 @@ function mainFunction() {
       dueDate: habiticaTask.date,
       completed: habiticaTask.completed,
       });
+  }
+
+
+  for (rawGoogleTask of rawGoogleTasks) {
+    const connectedHabiticaTask = allHabiticaTasks.find((task) => task.id === rawGoogleTask.notes)
+    if (connectedHabiticaTask === undefined) {
+      deleteGoogleTask(rawGoogleTask.id);
+    }
   }
 }
